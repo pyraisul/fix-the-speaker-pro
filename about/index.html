@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="About FixMySpeaker — we built a free speaker cleaning tool because the alternatives were slow, expensive, or didn’t work. Learn what drives us.">
+    <title>About Us — FixMySpeaker</title>
+    <link rel="canonical" href="https://fixmyspeaker.github.io/about/">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7DYJP3M16W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-7DYJP3M16W');
+    </script>
+    <style>
+        .about-hero {
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .about-hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .about-content {
+            padding: 80px 0;
+        }
+
+        .about-section {
+            max-width: 900px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .about-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .about-section p {
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .about-section ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .about-section ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .mission-card {
+            background: var(--white);
+            padding: 35px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .mission-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .mission-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .mission-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .team-values {
+            background: var(--gray-lighter);
+            padding: 60px 0;
+        }
+
+        .value-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .value-item {
+            background: var(--white);
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .value-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .value-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .technology-section {
+            background: var(--white);
+            padding: 60px 0;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .tech-card {
+            padding: 30px;
+            background: var(--gray-lighter);
+            border-radius: var(--radius-lg);
+            transition: var(--transition);
+        }
+
+        .tech-card:hover {
+            background: var(--gray-light);
+        }
+
+        .tech-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tech-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .cta-about {
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+        }
+
+        .cta-about h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .cta-about p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-about .btn-primary {
+            background: var(--white);
+            color: var(--primary-color);
+        }
+
+        .cta-about .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .about-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="/" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M8 10C8 8.89543 8.89543 8 10 8H12C13.1046 8 14 8.89543 14 10V22C14 23.1046 13.1046 24 12 24H10C8.89543 24 8 23.1046 8 22V10Z"
+                            fill="currentColor" />
+                        <path
+                            d="M16 12C16 10.8954 16.8954 10 18 10C20.7614 10 23 12.2386 23 15V17C23 19.7614 20.7614 22 18 22C16.8954 22 16 21.1046 16 20V12Z"
+                            fill="currentColor" />
+                    </svg>
+                    <span>FixMySpeaker</span>
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/#how-it-works" class="nav-link">How It Works</a></li>
+                    <li><a href="/#benefits" class="nav-link">Benefits</a></li>
+                    <li><a href="/#faq" class="nav-link">FAQ</a></li>
+                    <li><a href="/about/" class="nav-link">About</a></li>
+                    <li><a href="/contact/" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Hero -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>About FixMySpeaker</h1>
+            <p>We got tired of the rice-bag method. So we built something that actually works — and made it free for everyone.</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-content">
+        <div class="container">
+            <!-- Our Story -->
+            <div class="about-section">
+                <h2>How We Got Started</h2>
+                <p>FixMySpeaker started the way most tools do — with annoyance. A phone fell in the sink. The speaker sounded terrible. The internet said "put it in rice and wait 48 hours." That felt ridiculous.</p>
+                <p>We knew sound frequencies could vibrate moisture out of speakers (Apple does it with the Watch). So we built a simple browser tool to do the same thing. No app needed, no charge, no signup.</p>
+                <p>That side project turned into something real. Over 500,000 people have used FixMySpeaker to rescue their devices, and we're still making it better.</p>
+            </div>
+
+            <!-- Mission Cards -->
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-icon">🎯</div>
+                    <h3>What We’re About</h3>
+                    <p>Give people a free, dead-simple way to fix their own speakers without paying for an app or visiting a repair shop.</p>
+                </div>
+
+                <div class="mission-card">
+                    <div class="mission-icon">👁️</div>
+                    <h3>Where We’re Headed</h3>
+                    <p>Small device problems shouldn’t become expensive headaches. We want professional-grade maintenance tools in everyone’s pocket — no strings attached.</p>
+                </div>
+
+                <div class="mission-card">
+                    <div class="mission-icon">💚</div>
+                    <h3>The Bigger Picture</h3>
+                    <p>Every speaker we help fix is one less device thrown away. We’re here to extend device lifespans and cut down on e-waste, one cleaning cycle at a time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Values -->
+    <section class="team-values">
+        <div class="container">
+            <div class="about-section">
+                <h2>What We Stand For</h2>
+                <p>These are the principles behind every decision we make at FixMySpeaker:</p>
+
+                <div class="value-list">
+                    <div class="value-item">
+                        <h4>🆓 Free, Period</h4>
+                        <p>Speaker maintenance shouldn’t cost anything. No paywalls, no “pro” tier, no hidden fees. Everyone gets the full tool.</p>
+                    </div>
+
+                    <div class="value-item">
+                        <h4>🔒 Your Privacy, Respected</h4>
+                        <p>Everything runs locally in your browser. We don’t see your data, we don’t store it, we don’t sell it. Privacy isn’t a feature — it’s the default.</p>
+                    </div>
+
+                    <div class="value-item">
+                        <h4>🔬 Backed by Real Science</h4>
+                        <p>Our frequencies aren’t random. They’re based on acoustic engineering principles — the same kind of tech Apple uses for water ejection on the Apple Watch.</p>
+                    </div>
+
+                    <div class="value-item">
+                        <h4>🌐 No Downloads Needed</h4>
+                        <p>It’s a website. Open it on any browser, on any device with speakers, and you’re ready to go. No app store, no storage space, no fuss.</p>
+                    </div>
+
+                    <div class="value-item">
+                        <h4>🛡️ Safe by Design</h4>
+                        <p>All frequencies stay within normal speaker operating ranges. We include clear instructions and warnings so you know exactly what to expect.</p>
+                    </div>
+
+                    <div class="value-item">
+                        <h4>🌱 Less E-Waste</h4>
+                        <p>Fixing a speaker is better than replacing a phone. Every device we help rescue is one less piece of electronics in a landfill.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="technology-section">
+        <div class="container">
+            <div class="about-section">
+                <h2>The Tech Behind It</h2>
+                <p>FixMySpeaker combines browser-native audio tools with acoustic science to deliver real results:</p>
+
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h3>🔊 Web Audio API</h3>
+                        <p>We use the Web Audio API to generate tones with sub-hertz precision. This lets us dial in the exact frequency needed for water ejection or dust removal — all without requiring any app or plugin.</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h3>🌊 Water Eject Technology</h3>
+                        <p>The 165Hz tone is calibrated to make the speaker membrane oscillate at just the right speed to push water droplets outward through the grille. It’s the same frequency range used in Apple Watch’s built-in water eject — proven and safe.</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h3>💨 Multi-Frequency Dust Removal</h3>
+                        <p>Dust particles vary in size, so a single frequency won’t cut it. We cycle through 200Hz to 6400Hz to shake loose everything from fine lint to coarse grit — covering the full spectrum of common speaker debris.</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h3>📳 Vibration Enhancement</h3>
+                        <p>When sound alone doesn’t do the trick, we combine audio with the device’s Vibration API. The physical shaking adds mechanical force that helps dislodge stubborn blockages.</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h3>🎚️ Stereo Control</h3>
+                        <p>Stereo panning lets us route the cleaning signal to just the left speaker, just the right, or both at once. This means precise, targeted cleaning without wasting effort on a speaker that’s fine.</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h3>⚡ Real-Time Processing</h3>
+                        <p>Everything happens on your device, in your browser. No server uploads, no processing delays, no privacy worries. Just instant, local speaker cleaning.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="about-content" style="background: var(--gray-lighter);">
+        <div class="container">
+            <div class="about-section">
+                <h2>Why Over 500,000 People Trust Us</h2>
+                <p>There are good reasons people keep coming back:</p>
+
+                <ul>
+                    <li><strong>Proven Results:</strong> 98% success rate for minor to moderate water and dust issues
+                    </li>
+                    <li><strong>Lightning Fast:</strong> Complete cleaning cycle in under 2 minutes vs. 24-48 hours for
+                        rice method</li>
+                    <li><strong>Cost Savings:</strong> Save $50-150 per repair by fixing speakers yourself</li>
+                    <li><strong>No Installation:</strong> Works directly in your browser - no app downloads or storage
+                        needed</li>
+                    <li><strong>Universal Compatibility:</strong> Works with iPhone, Android, tablets, laptops, and more
+                    </li>
+                    <li><strong>Regular Updates:</strong> We continuously improve our technology based on user feedback
+                        and acoustic research</li>
+                    <li><strong>Transparent Operation:</strong> Open about how our technology works - no black boxes or
+                        secret formulas</li>
+                    <li><strong>Community Driven:</strong> Built for users, improved by user feedback, forever free for
+                        everyone</li>
+                </ul>
+            </div>
+
+            <div class="about-section">
+                <h2>What You Can Count On</h2>
+                <p>When you use FixMySpeaker, here’s the deal:</p>
+
+                <ul>
+                    <li><strong>Zero Data Collection:</strong> We never see, store, or transmit your device information
+                    </li>
+                    <li><strong>Always Free:</strong> No ads, no subscriptions, no hidden premium features</li>
+                    <li><strong>Regular Improvements:</strong> Continuous updates based on latest acoustic research</li>
+                    <li><strong>Responsive Support:</strong> Real humans ready to help with questions or issues</li>
+                    <li><strong>Honest Limitations:</strong> We're upfront about what we can and cannot fix</li>
+                    <li><strong>Safety First:</strong> Clear warnings and safe frequency ranges to protect you and your
+                        device</li>
+                    <li><strong>Open Source Spirit:</strong> Hosted on GitHub, transparent about our methods</li>
+                    <li><strong>Continuous Availability:</strong> 24/7 access whenever you need us</li>
+                </ul>
+            </div>
+
+            <div class="about-section">
+                <h2>What’s Next</h2>
+                <p>We’re always working on improving the cleaning algorithms, testing new frequency combinations, and figuring out how to support even more types of devices and speakers.</p>
+                <p>Down the road, we’re looking at things like device health tips, better educational content around speaker care, and possibly supporting more niche hardware like wireless earbuds and smart home speakers.</p>
+                <p>But the core idea stays simple: give people a free, effective way to fix their own speakers. That’s not changing.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-about">
+        <div class="container">
+            <h2>Give It a Shot</h2>
+            <p>Half a million people have already used FixMySpeaker to get their sound back — takes about 60 seconds</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="/" class="btn btn-primary btn-large">Try Our Tool Now</a>
+                <a href="/contact/" class="btn btn-secondary btn-large"
+                    style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white;">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FixMySpeaker</h3>
+                    <p>Free online tool that uses sound wave technology to push water out and shake dust loose from your phone and tablet speakers.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                        <li><a href="/#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service/">Terms of Service</a></li>
+                        <li><a href="/disclaimer/">Disclaimer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/#how-it-works">How It Works</a></li>
+                        <li><a href="/#benefits">Benefits</a></li>
+                        <li><a href="/#faq">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FixMySpeaker. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+
+</html>

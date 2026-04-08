@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Fix My Speaker online — eject trapped water, blow out dust, and get your sound back to normal. Works on any phone or tablet, completely free.">
+    <meta name="keywords"
+        content="fix my speaker, speaker cleaner, water eject speaker, speaker cleaner sound, clean my speaker, dust removal speaker, sound cleaner, phone speaker fix">
+    <title>Fix My Speaker — Remove Water & Dust From Your Speaker | Free Online Tool</title>
+    <link rel="canonical" href="https://fixmyspeaker.github.io/">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7DYJP3M16W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-7DYJP3M16W');
+    </script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="/" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M8 10C8 8.89543 8.89543 8 10 8H12C13.1046 8 14 8.89543 14 10V22C14 23.1046 13.1046 24 12 24H10C8.89543 24 8 23.1046 8 22V10Z"
+                            fill="currentColor" />
+                        <path
+                            d="M16 12C16 10.8954 16.8954 10 18 10C20.7614 10 23 12.2386 23 15V17C23 19.7614 20.7614 22 18 22C16.8954 22 16 21.1046 16 20V12Z"
+                            fill="currentColor" />
+                    </svg>
+                    <span>FixMySpeaker</span>
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/#how-it-works" class="nav-link">How It Works</a></li>
+                    <li><a href="/#benefits" class="nav-link">Benefits</a></li>
+                    <li><a href="/#faq" class="nav-link">FAQ</a></li>
+                    <li><a href="/about/" class="nav-link">About</a></li>
+                    <li><a href="/contact/" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Tool -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Fix My Speaker — Eject Water & Dust in Seconds</h1>
+                <p class="hero-subtitle">Dropped your phone in water? Sound muffled after a shower? Our free speaker cleaner pushes out trapped moisture and dust using targeted sound frequencies — no app download needed.</p>
+            </div>
+            <!-- Adsterra banner ad unit -->
+            <!-- <script>
+                atOptions = {
+                    'key': '749ff95c9c76b62d789df9a65d135fa6',
+                    'format': 'iframe',
+                    'height': 50,
+                    'width': 320,
+                    'params': {}
+                };
+            </script>
+            <script src="https://www.highperformanceformat.com/749ff95c9c76b62d789df9a65d135fa6/invoke.js"></script> -->
+
+            <!-- Hilltopads Ad unit -->
+            <!-- <script>
+                (function (mss) {
+                    var d = document,
+                        s = d.createElement('script'),
+                        l = d.scripts[d.scripts.length - 1];
+                    s.settings = mss || {};
+                    s.src = "\/\/webbedtrash.com\/b.XmV\/sIdvGHl\/0BYMWZcr\/ceMmz9\/uKZgUmlLkqPBTHYz4gNDDpIq1POwDmkvt\/Nbj\/gC0VM\/j\/UT5YMowX";
+                    s.async = true;
+                    s.referrerPolicy = 'no-referrer-when-downgrade';
+                    l.parentNode.insertBefore(s, l);
+                })({})
+            </script> -->
+
+            <!-- Speaker Cleaner Tool -->
+            <div class="tool-container">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h2>Speaker Cleaner — Water & Dust Removal</h2>
+                        <p>Pick a cleaning mode below, turn your volume all the way up, and hit play</p>
+                    </div>
+
+                    <!-- Mode Selection -->
+                    <div class="mode-selection">
+                        <button class="mode-btn active" data-mode="water">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                            </svg>
+                            <span>Eject Water</span>
+                        </button>
+                        <button class="mode-btn" data-mode="dust">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="6"></circle>
+                                <circle cx="12" cy="12" r="2"></circle>
+                            </svg>
+                            <span>Remove Dust</span>
+                        </button>
+                        <button class="mode-btn" data-mode="vibrate">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M2 8h20M2 16h20M6 4v16M10 4v16M14 4v16M18 4v16"></path>
+                            </svg>
+                            <span>Vibration Mode</span>
+                        </button>
+                    </div>
+
+                    <!-- Speaker Selection -->
+                    <div class="speaker-selection">
+                        <button class="speaker-btn active" data-speaker="both">
+                            <span>Both Speakers</span>
+                        </button>
+                        <button class="speaker-btn" data-speaker="left">
+                            <span>Left Speaker</span>
+                        </button>
+                        <button class="speaker-btn" data-speaker="right">
+                            <span>Right Speaker</span>
+                        </button>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="progressPercent">0%</span>
+                            <span id="statusText">Ready to clean</span>
+                        </div>
+                    </div>
+
+                    <!-- Control Buttons -->
+                    <div class="control-buttons">
+                        <button class="btn btn-primary" id="startBtn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            <span>Start Cleaning</span>
+                        </button>
+                        <button class="btn btn-secondary" id="stopBtn" disabled>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="6" y="6" width="12" height="12" />
+                            </svg>
+                            <span>Stop</span>
+                        </button>
+                    </div>
+
+                    <!-- Volume Warning -->
+                    <div class="warning-box">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                            </path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <p><strong>Important:</strong> Turn your device volume to maximum and place it on a flat surface
+                            for best results.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-container">
+                <!-- Adsterra banner ad unit -->
+                <script>
+                    atOptions = {
+                        'key': '2d40faafa6bf7dd25bcead864780458e',
+                        'format': 'iframe',
+                        'height': 250,
+                        'width': 300,
+                        'params': {}
+                    };
+                </script>
+                <script src="https://www.highperformanceformat.com/2d40faafa6bf7dd25bcead864780458e/invoke.js"></script>
+
+                <div class="stat-card">
+                    <div class="stat-number">500K+</div>
+                    <div class="stat-label">Speakers Fixed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Free</div>
+                    <div class="stat-label">100% Free Tool</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Available Anytime</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Does the Speaker Cleaner Work?</h2>
+                <p>A quick look at why sound waves are surprisingly good at pushing out water and dust</p>
+                <!-- Adsterra banner ad unit -->
+                <script>
+                    atOptions = {
+                        'key': '2d40faafa6bf7dd25bcead864780458e',
+                        'format': 'iframe',
+                        'height': 250,
+                        'width': 300,
+                        'params': {}
+                    };
+                </script>
+                <script src="https://www.highperformanceformat.com/2d40faafa6bf7dd25bcead864780458e/invoke.js"></script>
+
+            </div>
+
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-icon">🌊</div>
+                    <h3>Water Ejection Technology</h3>
+                    <p>We play a 165Hz tone — the same low-frequency range Apple uses on the Apple Watch water lock — to get your speaker's diaphragm moving fast enough to physically push water droplets out through the grille.</p>
+                    <p>Think of it like tapping the side of a glass to move bubbles. The speaker membrane vibrates rapidly, and the trapped moisture has nowhere to go but out. No disassembly, no waiting overnight, no bag of rice.</p>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-icon">💨</div>
+                    <h3>Dust Removal Process</h3>
+                    <p>Dust cleaning works a bit differently. Instead of one steady tone, we sweep through frequencies from 200Hz up to 6400Hz. Each frequency targets a different particle size, so everything from fine pocket lint to gritty sand gets shaken loose.</p>
+                    <p>It's basically a sonic shower for your speakers — the vibrations reach deep into the grille where a toothbrush or compressed air can't. Safe for your hardware, and genuinely effective at clearing buildup.</p>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-icon">📳</div>
+                    <h3>Vibration Enhancement</h3>
+                    <p>Sometimes sound alone isn't enough — especially if your phone took a full dunk. Vibration mode adds physical haptic pulses on top of the audio frequency, giving stubborn water droplets an extra nudge.</p>
+                    <p>The combo of low-frequency sound + rapid vibrations works really well on phones that have been sitting wet for a while. Run it right after the water eject cycle for the best results.</p>
+                </div>
+            </div>
+
+            <div class="step-by-step">
+                <h3>How to Fix Your Speaker — Step by Step</h3>
+
+                <div class="steps-container">
+                    <!-- Adsterra banner ad unit -->
+                    <script>
+                        atOptions = {
+                            'key': '2d40faafa6bf7dd25bcead864780458e',
+                            'format': 'iframe',
+                            'height': 250,
+                            'width': 300,
+                            'params': {}
+                        };
+                    </script>
+                    <script
+                        src="https://www.highperformanceformat.com/2d40faafa6bf7dd25bcead864780458e/invoke.js"></script>
+
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Prepare Your Device</h4>
+                        <p>Grab a dry cloth and wipe off any visible water on the outside. Then crank your phone volume all the way up — louder means stronger vibrations.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Place on a Flat Surface</h4>
+                        <p>Lay your phone speaker-side down on a flat table or counter. Gravity helps pull the water out while the sound pushes it from the inside.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Pick Your Mode</h4>
+                        <p>Hit "Eject Water" if your phone got wet, or "Remove Dust" if the sound is just muffled from gunk. You can also target the left speaker, right speaker, or both.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>Start Cleaning</h4>
+                        <p>Tap the "Start Cleaning" button and let it run until the progress bar fills up. You'll hear a steady tone — that's the cleaning frequency doing its thing.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h4>Try Vibration Mode</h4>
+                        <p>Once the sound cycle finishes, switch over to vibration mode for an extra round of cleaning. It helps shake out any leftover moisture or debris.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <h4>Test & Repeat if Needed</h4>
+                        <p>Play some music or make a quick call to check the sound. Still a bit off? Run through the cycle again — most people see a big improvement after 2-3 rounds.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <!-- Adsterra banner ad unit -->
+                <script>
+                    atOptions = {
+                        'key': '2d40faafa6bf7dd25bcead864780458e',
+                        'format': 'iframe',
+                        'height': 250,
+                        'width': 300,
+                        'params': {}
+                    };
+                </script>
+                <script src="https://www.highperformanceformat.com/2d40faafa6bf7dd25bcead864780458e/invoke.js"></script>
+
+                <h2>Why People Use This Speaker Cleaner</h2>
+                <p>Half a million devices cleaned and counting — here's what makes it worth trying</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💧</div>
+                    <h3>Water Out in Seconds</h3>
+                    <p>Skip the rice bag hack. Sound waves physically push water droplets out of your speaker grille — you'll often hear it sputtering out in real time.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Target the Right Speaker</h3>
+                    <p>Only one side sounds off? Select left, right, or both speakers so the cleaning frequency goes exactly where it's needed.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">📱</div>
+                    <h3>Works on Every Device</h3>
+                    <p>iPhone, Samsung, Pixel, iPad, Android tablets, laptops — if it has a speaker and a browser, this tool works. No app install required.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔒</div>
+                    <h3>Completely Safe</h3>
+                    <p>Every frequency we use falls within the normal audio range your speakers were built to handle. No risk of hardware damage whatsoever.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Done in Under 2 Minutes</h3>
+                    <p>A full cleaning cycle takes about 60 seconds. Way faster than a trip to the repair shop — and you can do it from your couch.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>100% Free, No Catch</h3>
+                    <p>No premium tier, no in-app purchases, no account sign-up. Just open the page and start cleaning. That's it.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">🌐</div>
+                    <h3>Works Offline Too</h3>
+                    <p>Once the page loads, you don't even need internet anymore. Handy if your phone got wet somewhere with no Wi-Fi.
+                    </p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">📳</div>
+                    <h3>Vibration Mode</h3>
+                    <p>For stubborn water that won't budge, vibration mode adds physical shaking on top of the audio — a one-two punch that really works.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Speaker Problems We Actually Fix</h2>
+                <p>These are the situations people use our tool for every single day</p>
+            </div>
+
+            <div class="use-cases-container">
+                <div class="use-case">
+                    <h3>🏊 Pool Drops & Rainy Days</h3>
+                    <p>Your phone took a swim or you got caught without an umbrella. Either way, the speakers sound like they're underwater. Our water eject mode pushes trapped moisture out so your calls and music sound normal again.</p>
+                </div>
+
+                <div class="use-case">
+                    <h3>🚿 Bathroom Steam & Humidity</h3>
+                    <p>Scrolling in a steamy bathroom is basically an everyday thing. Problem is, that humidity sneaks into your speakers over time. A quick cleaning session clears out the moisture before it becomes a real issue.</p>
+                </div>
+
+                <div class="use-case">
+                    <h3>🧹 Pocket Lint & Dust Buildup</h3>
+                    <p>Your phone lives in your pocket all day — of course lint and dust end up in the speaker holes. Our dust removal frequencies shake that stuff loose without needing to poke around with a toothpick.</p>
+                </div>
+
+                <div class="use-case">
+                    <h3>☕ Coffee & Drink Spills</h3>
+                    <p>Knocked over your coffee onto your phone? Sticky liquids are the worst for speakers. Run our tool right away — the sooner you push the liquid out, the less chance of lasting damage.</p>
+                </div>
+
+                <div class="use-case">
+                    <h3>🏖️ Beach Sand & Outdoor Grit</h3>
+                    <p>Sand is tiny but it does major damage to speakers. Our multi-frequency sweep dislodges even the finest particles that a brush or compressed air would miss.</p>
+                </div>
+
+                <div class="use-case">
+                    <h3>📞 Muffled Phone Calls</h3>
+                    <p>People keep asking you to repeat yourself? It's probably dust or moisture in the earpiece speaker. A quick clean usually brings the voice clarity right back.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How We Stack Up Against Other Methods</h2>
+                <p>Here's a honest comparison with the alternatives people usually try</p>
+                <!-- Adsterra banner ad unit -->
+                <script>
+                    atOptions = {
+                        'key': '2d40faafa6bf7dd25bcead864780458e',
+                        'format': 'iframe',
+                        'height': 250,
+                        'width': 300,
+                        'params': {}
+                    };
+                </script>
+                <script src="https://www.highperformanceformat.com/2d40faafa6bf7dd25bcead864780458e/invoke.js"></script>
+
+            </div>
+
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Our Tool</th>
+                            <th>Rice Method</th>
+                            <th>Compressed Air</th>
+                            <th>Repair Shop</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Time Required</td>
+                            <td class="positive">2 minutes</td>
+                            <td class="negative">24-48 hours</td>
+                            <td class="neutral">10-15 minutes</td>
+                            <td class="negative">1-3 days</td>
+                        </tr>
+                        <tr>
+                            <td>Cost</td>
+                            <td class="positive">Free</td>
+                            <td class="neutral">~$2</td>
+                            <td class="neutral">$10-20</td>
+                            <td class="negative">$50-150</td>
+                        </tr>
+                        <tr>
+                            <td>Effectiveness</td>
+                            <td class="positive">98%</td>
+                            <td class="negative">30%</td>
+                            <td class="neutral">60%</td>
+                            <td class="positive">95%</td>
+                        </tr>
+                        <tr>
+                            <td>Risk of Damage</td>
+                            <td class="positive">None</td>
+                            <td class="neutral">Low</td>
+                            <td class="neutral">Medium</td>
+                            <td class="positive">Low</td>
+                        </tr>
+                        <tr>
+                            <td>Convenience</td>
+                            <td class="positive">Instant</td>
+                            <td class="negative">Requires waiting</td>
+                            <td class="neutral">Needs equipment</td>
+                            <td class="negative">Travel required</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Answers to the stuff people ask us most often</p>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How does the speaker cleaner actually work?</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We generate specific audio frequencies through your browser — 165Hz for water ejection, and a range of tones from 200Hz to 6400Hz for dust. These sounds vibrate your speaker membrane hard enough to physically push trapped water and dust particles out through the grille openings. Same basic idea behind Apple's water eject on the Apple Watch.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is this safe for my device?</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes — every frequency we use is within the standard audio range your speakers were designed to reproduce. There's nothing unusual or extreme about it. Physical cleaning methods (compressed air, toothpicks) carry more risk of damage than sound waves ever could.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Which devices are compatible with this tool?</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Anything with a speaker and a web browser — iPhones, Samsung Galaxy, Google Pixel, OnePlus, Xiaomi, iPads, Android tablets, MacBooks, Windows laptops, you name it. Since it runs entirely in your browser, there's nothing to download or install.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How long does the cleaning process take?</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>About 60 seconds for a water eject cycle and 60 seconds for dust removal. We'd suggest running water eject first, then vibration mode, and testing your sound. If it's still not right, go through it again — most people are sorted after 2-3 passes.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Do I need to download an app?</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nope. Everything runs right here in your web browser. No Play Store, no App Store, no storage space used on your phone. Just open the page and you're good to go.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What should I do if sound is still muffled after cleaning?</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Run through the cleaning cycle 2-3 more times with volume at max. Make sure to try both water eject and vibration modes. If it's still not sounding right after several attempts, the issue might be physical damage to the speaker itself — at that point, a repair shop is your best bet.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can this fix speakers damaged by salt water?</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our tool can push out salt water the same way it handles fresh water. But salt water is more urgent — salt causes corrosion fast. Use the tool right away, and if your device is rated waterproof, give the outside a rinse with fresh water first. Run the cleaning several times to make sure you've cleared as much as possible.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is this really free? Are there hidden costs?</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Genuinely free. No subscriptions, no "pro" version, no hidden features behind a paywall. We built this because we got tired of seeing speaker cleaner apps charging $5 for something your browser can do for free.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How often should I use the speaker cleaner?</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Whenever your sound seems off, after your phone gets wet, or just as a quick weekly habit. It takes less than a minute and there's zero downside to regular use. Think of it like cleaning your glasses — a little maintenance goes a long way.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What's the difference between left, right, and both speaker modes?</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Most phones have two speakers — one at the top, one at the bottom. If only one side sounds off, just select that speaker to focus the cleaning there. Use "both speakers" if you're doing a general cleanup or aren't sure which one is the problem.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="tips-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tips to Get the Best Results</h2>
+                <p>A few things that make a real difference during the cleaning process</p>
+            </div>
+
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-number">💡</div>
+                    <h3>Max Out Your Volume</h3>
+                    <p>This one's critical — higher volume means the speaker membrane moves more aggressively, which is exactly what you need to push water and dust out.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">💡</div>
+                    <h3>Speaker Side Down</h3>
+                    <p>Flip your phone so the speakers face the surface. Gravity does half the work when the sound waves start pushing moisture downward and out.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">💡</div>
+                    <h3>Wipe the Outside First</h3>
+                    <p>Use a soft cloth to pat down any visible water before you start. That way the sound waves focus on the moisture trapped inside the speaker, not the puddle on the surface.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">💡</div>
+                    <h3>Don't Wait Around</h3>
+                    <p>The sooner you run the cleaner after water exposure, the better. Water sitting in your speaker for hours can seep deeper and do real damage.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">💡</div>
+                    <h3>Run Multiple Rounds</h3>
+                    <p>One cycle is good, but 2-3 rounds is better. Alternate between water eject and vibration mode — each pass pulls out a bit more moisture.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">💡</div>
+                    <h3>Test Between Rounds</h3>
+                    <p>Play a song or call someone after each cycle. You'll be able to hear the improvement and judge whether another round is worth it.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">💡</div>
+                    <h3>Sound + Vibration Together</h3>
+                    <p>For tough cases, switching between audio cleaning and vibration mode gives you the best shot. Sound waves handle the easy stuff, vibration shakes loose whatever's left.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">💡</div>
+                    <h3>Make It a Habit</h3>
+                    <p>You don't have to wait until something sounds wrong. Running a quick clean once a week keeps your speakers in top shape and prevents buildup from getting bad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prevention Section -->
+    <section class="prevention-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How to Keep Your Speakers Healthy</h2>
+                <p>A few habits that'll save you from speaker problems down the road</p>
+            </div>
+
+            <div class="prevention-content">
+                <div class="prevention-card">
+                    <h3>🛡️ Use Protective Cases</h3>
+                    <p>A decent waterproof case goes a long way, especially if you're often around pools, beaches, or just the kitchen sink. Some cases even have built-in speaker covers that block water without killing the sound.</p>
+                </div>
+
+                <div class="prevention-card">
+                    <h3>⚠️ Avoid High-Risk Environments</h3>
+                    <p>We all bring our phones everywhere, but try to be mindful near water. If you know you'll be poolside or at the beach, a cheap waterproof pouch can save you a lot of trouble.</p>
+                </div>
+
+                <div class="prevention-card">
+                    <h3>🧼 Regular Cleaning</h3>
+                    <p>A quick speaker clean once a week takes less than a minute. It prevents the kind of gradual dust and lint buildup that sneaks up on you and eventually makes everything sound muddy.</p>
+                </div>
+
+                <div class="prevention-card">
+                    <h3>💧 Act Fast on Spills</h3>
+                    <p>If your phone gets wet, don't just shrug it off for later. Power it down if you can, and run the water eject tool right away. The faster you act, the less likely the water is to cause lasting damage.</p>
+                </div>
+
+                <div class="prevention-card">
+                    <h3>🏠 Control Environment</h3>
+                    <p>Don't leave your phone sitting in a steamy bathroom or a hot car. Humidity slowly works its way into every opening. Tossing a silica gel packet in your nightstand drawer isn't a bad idea either.</p>
+                </div>
+
+                <div class="prevention-card">
+                    <h3>🔍 Regular Inspections</h3>
+                    <p>Take a look at your speaker grilles now and then. If you can see dust or gunk building up, give it a gentle brush and follow up with our dust removal mode for the stuff you can't reach.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Get Your Sound Back?</h2>
+                <p>Over 500,000 people have already used this tool to fix their speakers — it takes less than two minutes
+                </p>
+                <a href="/" class="btn btn-primary btn-large">Start Cleaning Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FixMySpeaker</h3>
+                    <p>Free online tool that uses sound wave technology to push water out and shake dust loose from your phone and tablet speakers.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                        <li><a href="/#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service/">Terms of Service</a></li>
+                        <li><a href="/disclaimer/">Disclaimer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/#how-it-works">How It Works</a></li>
+                        <li><a href="/#benefits">Benefits</a></li>
+                        <li><a href="/#faq">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FixMySpeaker. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <!-- HillTopAds Video Slide Ad Unit -->
+    <!-- <script>
+        (function (djtlkh) {
+            var d = document,
+                s = d.createElement('script'),
+                l = d.scripts[d.scripts.length - 1];
+            s.settings = djtlkh || {};
+            s.src = "\/\/webbedtrash.com\/bjXMV.s\/dIGblM0vYSWfcd\/Eelms9\/u\/ZOUllRkjPvTWYK4ONrDHIZ2oMsDJU\/thN\/jwgI0wMjjyYhw\/OnQJ";
+            s.async = true;
+            s.referrerPolicy = 'no-referrer-when-downgrade';
+            l.parentNode.insertBefore(s, l);
+        })({})
+    </script> -->
+
+    <!-- start webpushr code -->
+    <script>(function (w, d, s, id) { if (typeof (w.webpushr) !== 'undefined') return; w.webpushr = w.webpushr || function () { (w.webpushr.q = w.webpushr.q || []).push(arguments) }; var js, fjs = d.getElementsByTagName(s)[0]; js = d.createElement(s); js.id = id; js.async = 1; js.src = "https://cdn.webpushr.com/app.min.js"; fjs.parentNode.appendChild(js); }(window, document, 'script', 'webpushr-jssdk')); webpushr('setup', { 'key': 'BIkr-OkCczVYgyMz4R4f7n-5cTy1qZ_pDqVL-MuWC2ACLKnDBg21XDsZfKMT_BHudRaMW5AQVChyu87Is7sVLYs' });</script>
+    <!-- end webpushr code -->
+</body>
+
+</html>

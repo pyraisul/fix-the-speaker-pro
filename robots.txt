@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+
+
+Sitemap: https://fixmyspeaker.github.io/sitemap.xml
