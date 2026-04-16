@@ -1,111 +1,324 @@
-// Speaker Cleaner Tool - Main JavaScript File
+// Speaker Cleaner Tool — plays sound.mp3 (water & dust) and vibrate.mp3 (vibration mode)
 
-// Global variables
+const SOUND_MP3 = "sound.mp3";
+const VIBRATE_MP3 = "vibrate.mp3";
+
 let audioContext;
-let oscillator;
-let gainNode;
+/** Splits stereo MP3 into L/R paths so "Left / Right" mutes the other channel (clearer than StereoPanner on many PCs). */
+let channelSplitter;
+let gainSpeakerL;
+let gainSpeakerR;
+let channelMerger;
+let soundEl;
+let vibrateEl;
+let soundMediaNode;
+let vibrateMediaNode;
+let graphReady = false;
+/** When false, MP3s play via plain HTMLAudioElement (needed for file:// and if Web Audio routing fails). */
+let useWebAudioRouting = false;
+
+function isHttpLikeOrigin() {
+  return location.protocol === "http:" || location.protocol === "https:";
+}
+
 let isPlaying = false;
 let currentMode = "water";
+let lastSoundMode = "water";
 let currentSpeaker = "both";
 let progressInterval;
 let vibrationInterval;
+/** Set while an MP3 session is active; call to settle the waiting promise (e.g. on Stop). */
+let settlePlayback = null;
 
-// Initialize on page load
+const EJECT_BTN_IDLE_HTML = `
+                <span class="eject-circle-btn__icons" aria-hidden="true">
+                    <svg class="eject-circle-btn__wind" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 14a4 4 0 0 1 4-4h1.5M4 10a8 8 0 0 1 8-8h2M4 18h3M8 18h8M12 14h6M16 10h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="eject-circle-btn__drops">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="currentColor" opacity="0.95"/>
+                        </svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="currentColor" opacity="0.65"/>
+                        </svg>
+                    </span>
+                </span>`;
+
+const EJECT_BTN_RUNNING_HTML = `
+                <span class="eject-circle-btn__icons eject-circle-btn__icons--running" aria-hidden="true">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" opacity="0.35"/>
+                        <path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>`;
+
 document.addEventListener("DOMContentLoaded", () => {
-  initializeAudioContext();
   setupEventListeners();
   setupMobileMenu();
   setupFAQ();
   setupSmoothScroll();
 });
 
-// Initialize Audio Context
-function initializeAudioContext() {
+function ensureAudioGraph() {
+  if (graphReady) return;
+
+  soundEl = new Audio(SOUND_MP3);
+  vibrateEl = new Audio(VIBRATE_MP3);
+  soundEl.preload = "auto";
+  vibrateEl.preload = "auto";
+
+  useWebAudioRouting = false;
+  soundMediaNode = undefined;
+  vibrateMediaNode = undefined;
+
+  if (!isHttpLikeOrigin()) {
+    graphReady = true;
+    return;
+  }
+
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) {
+    graphReady = true;
+    return;
+  }
+
   try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    audioContext = new AudioContext();
-  } catch (error) {
-    console.error("Web Audio API not supported:", error);
-    alert(
-      "Your browser does not support the Web Audio API. Please use a modern browser."
-    );
+    audioContext = new AC();
+    channelSplitter = audioContext.createChannelSplitter(2);
+    gainSpeakerL = audioContext.createGain();
+    gainSpeakerR = audioContext.createGain();
+    channelMerger = audioContext.createChannelMerger(2);
+    channelSplitter.connect(gainSpeakerL, 0);
+    channelSplitter.connect(gainSpeakerR, 1);
+    gainSpeakerL.connect(channelMerger, 0, 0);
+    gainSpeakerR.connect(channelMerger, 0, 1);
+    channelMerger.connect(audioContext.destination);
+    applySpeakerPan();
+    soundMediaNode = audioContext.createMediaElementSource(soundEl);
+    vibrateMediaNode = audioContext.createMediaElementSource(vibrateEl);
+    useWebAudioRouting = true;
+  } catch (e) {
+    console.warn("Web Audio routing unavailable; using direct speaker output.", e);
+    audioContext = undefined;
+    channelSplitter = undefined;
+    gainSpeakerL = undefined;
+    gainSpeakerR = undefined;
+    channelMerger = undefined;
+    soundMediaNode = undefined;
+    vibrateMediaNode = undefined;
+    useWebAudioRouting = false;
+  }
+
+  graphReady = true;
+}
+
+function applySpeakerPan() {
+  if (!useWebAudioRouting || !gainSpeakerL || !gainSpeakerR || !audioContext) return;
+  const t = audioContext.currentTime;
+  switch (currentSpeaker) {
+    case "left":
+      gainSpeakerL.gain.setValueAtTime(1, t);
+      gainSpeakerR.gain.setValueAtTime(0, t);
+      break;
+    case "right":
+      gainSpeakerL.gain.setValueAtTime(0, t);
+      gainSpeakerR.gain.setValueAtTime(1, t);
+      break;
+    case "both":
+    default:
+      gainSpeakerL.gain.setValueAtTime(1, t);
+      gainSpeakerR.gain.setValueAtTime(1, t);
+      break;
   }
 }
 
+function disconnectMediaFromPanner() {
+  if (!useWebAudioRouting || !soundMediaNode) return;
+  try {
+    soundMediaNode.disconnect();
+  } catch (e) {
+    /* not connected */
+  }
+  try {
+    vibrateMediaNode.disconnect();
+  } catch (e) {
+    /* not connected */
+  }
+}
+
+/** Pause and rewind both MP3 elements; detach from panner. */
+function stopAllAudio() {
+  if (soundEl) {
+    soundEl.pause();
+    soundEl.currentTime = 0;
+  }
+  if (vibrateEl) {
+    vibrateEl.pause();
+    vibrateEl.currentTime = 0;
+  }
+  if (graphReady && useWebAudioRouting) disconnectMediaFromPanner();
+}
+
+/**
+ * Play one HTMLMediaElement through the shared panner until it ends or cleaning stops.
+ * @returns {Promise<void>}
+ */
+function playMp3ThroughGraph(mediaEl, mediaNode, statusWhilePlaying, statusIfCompleted) {
+  stopAllAudio();
+  if (useWebAudioRouting && mediaNode && channelSplitter) {
+    applySpeakerPan();
+    disconnectMediaFromPanner();
+    mediaNode.connect(channelSplitter);
+  }
+
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (naturalEnd) => {
+      if (settled) return;
+      settled = true;
+      settlePlayback = null;
+      clearInterval(progressInterval);
+      progressInterval = null;
+      mediaEl.removeEventListener("ended", onEnded);
+      if (naturalEnd && isPlaying && statusIfCompleted) {
+        updateProgress(100, statusIfCompleted);
+      }
+      resolve();
+    };
+
+    const onEnded = () => finish(true);
+
+    settlePlayback = () => finish(false);
+
+    updateProgress(0, statusWhilePlaying);
+
+    progressInterval = setInterval(() => {
+      if (!isPlaying) {
+        mediaEl.pause();
+        if (settlePlayback) settlePlayback();
+        return;
+      }
+      const d = mediaEl.duration;
+      if (d && isFinite(d) && d > 0) {
+        updateProgress((mediaEl.currentTime / d) * 100, statusWhilePlaying);
+      }
+    }, 100);
+
+    mediaEl.currentTime = 0;
+    mediaEl.addEventListener("ended", onEnded);
+
+    mediaEl.play().catch((err) => {
+      console.error(err);
+      isPlaying = false;
+      settlePlayback();
+      alert(
+        "Could not play audio. Check that sound.mp3 / vibrate.mp3 are in the same folder as this page, then try again."
+      );
+    });
+  });
+}
+
 function setupEventListeners() {
-  // Only setup if the tool is present (check for main button)
   const startBtn = document.getElementById("startBtn");
   const stopBtn = document.getElementById("stopBtn");
   if (!startBtn || !stopBtn) return;
 
-  // Mode selection buttons
-  const modeBtns = document.querySelectorAll(".mode-btn");
+  const soundTool = document.getElementById("soundTool");
+
+  const modeTypeBtns = document.querySelectorAll(".mode-type-btn");
+  modeTypeBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const type = btn.dataset.type;
+      modeTypeBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      if (type === "vibrate") {
+        if (soundTool) soundTool.classList.add("sound-tool--vibrate-type");
+        if (currentMode === "water" || currentMode === "dust") {
+          lastSoundMode = currentMode;
+        }
+        currentMode = "vibrate";
+        document
+          .querySelectorAll(".sound-submodes .mode-btn")
+          .forEach((b) => b.classList.remove("active"));
+      } else {
+        if (soundTool) soundTool.classList.remove("sound-tool--vibrate-type");
+        currentMode = lastSoundMode;
+        document.querySelectorAll(".sound-submodes .mode-btn").forEach((b) => {
+          b.classList.toggle("active", b.dataset.mode === lastSoundMode);
+        });
+      }
+      updateEjectHint();
+    });
+  });
+
+  const modeBtns = document.querySelectorAll(".sound-submodes .mode-btn");
   modeBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       modeBtns.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       currentMode = btn.dataset.mode;
+      lastSoundMode = currentMode;
+      updateEjectHint();
     });
   });
 
-  // Speaker selection buttons
   const speakerBtns = document.querySelectorAll(".speaker-btn");
   speakerBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       speakerBtns.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       currentSpeaker = btn.dataset.speaker;
+      applySpeakerPan();
     });
   });
 
-  // Control buttons
   startBtn.addEventListener("click", startCleaning);
   stopBtn.addEventListener("click", stopCleaning);
+
+  initProgressGauge();
+  updateEjectHint();
 }
 
-// Setup Event Listeners
-// function setupEventListeners() {
-//   // Mode selection buttons
-//   const modeBtns = document.querySelectorAll(".mode-btn");
-//   modeBtns.forEach((btn) => {
-//     btn.addEventListener("click", () => {
-//       modeBtns.forEach((b) => b.classList.remove("active"));
-//       btn.classList.add("active");
-//       currentMode = btn.dataset.mode;
-//     });
-//   });
+function updateEjectHint() {
+  const el = document.getElementById("ejectHint");
+  if (!el) return;
+  if (currentMode === "vibrate") {
+    el.textContent = "Press for vibration mode";
+  } else if (currentMode === "dust") {
+    el.textContent = "Press to remove dust";
+  } else {
+    el.textContent = "Press to eject water";
+  }
+}
 
-//   // Speaker selection buttons
-//   const speakerBtns = document.querySelectorAll(".speaker-btn");
-//   speakerBtns.forEach((btn) => {
-//     btn.addEventListener("click", () => {
-//       speakerBtns.forEach((b) => b.classList.remove("active"));
-//       btn.classList.add("active");
-//       currentSpeaker = btn.dataset.speaker;
-//     });
-//   });
+function initProgressGauge() {
+  const gaugePath = document.getElementById("progressGaugeFill");
+  if (!gaugePath) return;
+  gaugePath.style.strokeDasharray = "100";
+  gaugePath.style.strokeDashoffset = "100";
+}
 
-//   // Control buttons
-//   document.getElementById("startBtn").addEventListener("click", startCleaning);
-//   document.getElementById("stopBtn").addEventListener("click", stopCleaning);
-// }
-
-// Start Cleaning Process
 async function startCleaning() {
   if (isPlaying) return;
 
-  // Resume audio context if suspended (required for user interaction)
-  if (audioContext.state === "suspended") {
-    await audioContext.resume();
+  ensureAudioGraph();
+  if (!graphReady || !soundEl || !vibrateEl) {
+    alert("Audio could not be initialized in this browser.");
+    return;
+  }
+
+  if (useWebAudioRouting && audioContext) {
+    if (audioContext.state === "suspended") {
+      await audioContext.resume();
+    }
   }
 
   isPlaying = true;
   updateUIState(true);
-
-  // Reset progress
   updateProgress(0, "Starting...");
 
-  // Execute cleaning based on mode
   switch (currentMode) {
     case "water":
       await waterEjectMode();
@@ -117,178 +330,63 @@ async function startCleaning() {
       await vibrationMode();
       break;
   }
+
+  stopVibration();
+  stopAllAudio();
+  isPlaying = false;
+  updateUIState(false);
 }
 
-// Stop Cleaning Process
 function stopCleaning() {
   isPlaying = false;
   stopAllAudio();
   stopVibration();
+  if (settlePlayback) {
+    settlePlayback();
+  }
   clearInterval(progressInterval);
+  progressInterval = null;
   updateProgress(0, "Stopped");
   updateUIState(false);
 }
 
-// Water Eject Mode
 async function waterEjectMode() {
-  updateProgress(0, "Ejecting water...");
-
-  // Play 165Hz frequency (optimal for water ejection)
-  const duration = 60000; // 60 seconds
-  playFrequency(165, duration);
-
-  // Animate progress
-  animateProgress(duration, "Ejecting water...");
-
-  // Wait for completion
-  await sleep(duration);
-
-  if (isPlaying) {
-    updateProgress(100, "Water ejection complete!");
-    stopAllAudio();
-    isPlaying = false;
-    updateUIState(false);
-  }
+  await playMp3ThroughGraph(
+    soundEl,
+    soundMediaNode,
+    "Ejecting water...",
+    "Water ejection complete!"
+  );
 }
 
-// Dust Removal Mode
 async function dustRemovalMode() {
-  updateProgress(0, "Removing dust...");
-
-  // Cycle through frequencies for dust removal
-  const frequencies = [200, 400, 800, 1600, 3200, 6400];
-  const durationPerFreq = 10000; // 10 seconds per frequency
-  const totalDuration = frequencies.length * durationPerFreq;
-
-  let elapsed = 0;
-
-  for (let i = 0; i < frequencies.length && isPlaying; i++) {
-    const freq = frequencies[i];
-    playFrequency(freq, durationPerFreq);
-
-    const startTime = Date.now();
-    const endTime = startTime + durationPerFreq;
-
-    while (Date.now() < endTime && isPlaying) {
-      elapsed = i * durationPerFreq + (Date.now() - startTime);
-      const progress = (elapsed / totalDuration) * 100;
-      updateProgress(progress, `Removing dust... ${freq}Hz`);
-      await sleep(100);
-    }
-
-    stopAllAudio();
-    await sleep(500); // Brief pause between frequencies
-  }
-
-  if (isPlaying) {
-    updateProgress(100, "Dust removal complete!");
-    isPlaying = false;
-    updateUIState(false);
-  }
+  await playMp3ThroughGraph(
+    soundEl,
+    soundMediaNode,
+    "Removing dust...",
+    "Dust removal complete!"
+  );
 }
 
-// Vibration Mode
 async function vibrationMode() {
   if (!("vibrate" in navigator)) {
-    alert("Vibration API not supported on this device");
-    stopCleaning();
-    return;
+    alert("Vibration API is not supported on this device; audio will still play.");
+  } else {
+    startVibrationPattern();
   }
 
-  updateProgress(0, "Vibration mode active...");
+  await playMp3ThroughGraph(
+    vibrateEl,
+    vibrateMediaNode,
+    "Vibrating...",
+    "Vibration complete!"
+  );
 
-  // Play low frequency sound with vibration
-  const duration = 30000; // 30 seconds
-  playFrequency(80, duration);
-
-  // Start vibration pattern
-  startVibrationPattern();
-
-  // Animate progress
-  animateProgress(duration, "Vibrating...");
-
-  // Wait for completion
-  await sleep(duration);
-
-  if (isPlaying) {
-    updateProgress(100, "Vibration complete!");
-    stopAllAudio();
-    stopVibration();
-    isPlaying = false;
-    updateUIState(false);
-  }
+  stopVibration();
 }
 
-// Play Frequency
-function playFrequency(frequency, duration) {
-  stopAllAudio();
-
-  // Create oscillator
-  oscillator = audioContext.createOscillator();
-  gainNode = audioContext.createGain();
-
-  // Create stereo panner for left/right speaker selection
-  const panner = audioContext.createStereoPanner();
-
-  // Set panning based on speaker selection
-  switch (currentSpeaker) {
-    case "left":
-      panner.pan.value = -1; // Full left
-      break;
-    case "right":
-      panner.pan.value = 1; // Full right
-      break;
-    case "both":
-    default:
-      panner.pan.value = 0; // Center (both)
-      break;
-  }
-
-  // Configure oscillator
-  oscillator.type = "sine";
-  oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-
-  // Set gain (volume)
-  gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-  gainNode.gain.linearRampToValueAtTime(1, audioContext.currentTime + 0.1); // Fade in
-
-  // Connect nodes
-  oscillator.connect(gainNode);
-  gainNode.connect(panner);
-  panner.connect(audioContext.destination);
-
-  // Start oscillator
-  oscillator.start();
-
-  // Schedule fade out before stop
-  const stopTime = audioContext.currentTime + duration / 1000;
-  gainNode.gain.setValueAtTime(1, stopTime - 0.1);
-  gainNode.gain.linearRampToValueAtTime(0, stopTime);
-  oscillator.stop(stopTime);
-}
-
-// Stop All Audio
-function stopAllAudio() {
-  if (oscillator) {
-    try {
-      oscillator.stop();
-      oscillator.disconnect();
-    } catch (e) {
-      // Already stopped
-    }
-    oscillator = null;
-  }
-  if (gainNode) {
-    gainNode.disconnect();
-    gainNode = null;
-  }
-}
-
-// Start Vibration Pattern
 function startVibrationPattern() {
-  // Vibrate pattern: [vibrate, pause, vibrate, pause, ...]
-  const pattern = [200, 100]; // 200ms vibrate, 100ms pause
-
+  const pattern = [200, 100];
   vibrationInterval = setInterval(() => {
     if (isPlaying && "vibrate" in navigator) {
       navigator.vibrate(pattern);
@@ -296,84 +394,50 @@ function startVibrationPattern() {
   }, 300);
 }
 
-// Stop Vibration
 function stopVibration() {
   if (vibrationInterval) {
     clearInterval(vibrationInterval);
     vibrationInterval = null;
   }
   if ("vibrate" in navigator) {
-    navigator.vibrate(0); // Stop any ongoing vibration
+    navigator.vibrate(0);
   }
 }
 
-// Animate Progress
-function animateProgress(duration, statusText) {
-  const startTime = Date.now();
-  const endTime = startTime + duration;
-
-  clearInterval(progressInterval);
-
-  progressInterval = setInterval(() => {
-    if (!isPlaying) {
-      clearInterval(progressInterval);
-      return;
-    }
-
-    const now = Date.now();
-    const elapsed = now - startTime;
-    const progress = Math.min((elapsed / duration) * 100, 100);
-
-    updateProgress(progress, statusText);
-
-    if (progress >= 100) {
-      clearInterval(progressInterval);
-    }
-  }, 100);
-}
-
-// Update Progress Bar
 function updateProgress(percent, status) {
-  const progressFill = document.getElementById("progressFill");
+  const p = Math.min(100, Math.max(0, percent));
   const progressPercent = document.getElementById("progressPercent");
   const statusText = document.getElementById("statusText");
+  const gaugePath = document.getElementById("progressGaugeFill");
+  const progressFill = document.getElementById("progressFill");
 
-  progressFill.style.width = `${percent}%`;
-  progressPercent.textContent = `${Math.round(percent)}%`;
-  statusText.textContent = status;
+  if (progressPercent) progressPercent.textContent = `${Math.round(p)}%`;
+  if (statusText) statusText.textContent = status;
+  if (gaugePath) gaugePath.style.strokeDashoffset = String(100 - p);
+  if (progressFill) progressFill.style.width = `${p}%`;
 }
 
-// Update UI State
 function updateUIState(playing) {
   const startBtn = document.getElementById("startBtn");
   const stopBtn = document.getElementById("stopBtn");
-  const modeBtns = document.querySelectorAll(".mode-btn");
+  const modeBtns = document.querySelectorAll(".sound-submodes .mode-btn");
   const speakerBtns = document.querySelectorAll(".speaker-btn");
+  const modeTypeBtns = document.querySelectorAll(".mode-type-btn");
 
   startBtn.disabled = playing;
   stopBtn.disabled = !playing;
 
   modeBtns.forEach((btn) => (btn.disabled = playing));
   speakerBtns.forEach((btn) => (btn.disabled = playing));
+  modeTypeBtns.forEach((btn) => (btn.disabled = playing));
 
   if (!playing) {
-    startBtn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"/>
-            </svg>
-            <span>Start Cleaning</span>
-        `;
+    startBtn.innerHTML = EJECT_BTN_IDLE_HTML;
   } else {
-    startBtn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <circle cx="12" cy="12" r="10" opacity="0.5"/>
-            </svg>
-            <span>Running...</span>
-        `;
+    startBtn.innerHTML = EJECT_BTN_RUNNING_HTML;
   }
 }
 
-// Mobile Menu
 function setupMobileMenu() {
   const mobileMenuBtn = document.getElementById("mobileMenuBtn");
   const navLinks = document.getElementById("navLinks");
@@ -384,7 +448,6 @@ function setupMobileMenu() {
       mobileMenuBtn.classList.toggle("active");
     });
 
-    // Close menu when clicking on a link
     const links = navLinks.querySelectorAll("a");
     links.forEach((link) => {
       link.addEventListener("click", () => {
@@ -395,7 +458,6 @@ function setupMobileMenu() {
   }
 }
 
-// FAQ Accordion
 function setupFAQ() {
   const faqQuestions = document.querySelectorAll(".faq-question");
 
@@ -404,12 +466,10 @@ function setupFAQ() {
       const faqItem = question.parentElement;
       const isActive = faqItem.classList.contains("active");
 
-      // Close all other FAQ items
       document.querySelectorAll(".faq-item").forEach((item) => {
         item.classList.remove("active");
       });
 
-      // Toggle current item
       if (!isActive) {
         faqItem.classList.add("active");
       }
@@ -417,7 +477,6 @@ function setupFAQ() {
   });
 }
 
-// Smooth Scroll
 function setupSmoothScroll() {
   const links = document.querySelectorAll('a[href^="#"]');
 
@@ -437,7 +496,6 @@ function setupSmoothScroll() {
     });
   });
 
-  // Update active nav link on scroll
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".nav-link");
 
@@ -446,7 +504,6 @@ function setupSmoothScroll() {
 
     sections.forEach((section) => {
       const sectionTop = section.offsetTop;
-      const sectionHeight = section.clientHeight;
       if (pageYOffset >= sectionTop - 200) {
         current = section.getAttribute("id");
       }
@@ -461,20 +518,12 @@ function setupSmoothScroll() {
   });
 }
 
-// Utility function for sleep
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-// Handle page visibility change (pause when tab is hidden)
 document.addEventListener("visibilitychange", () => {
   if (document.hidden && isPlaying) {
-    // Optionally stop when tab is hidden
     // stopCleaning();
   }
 });
 
-// Cleanup on page unload
 window.addEventListener("beforeunload", () => {
   stopCleaning();
   if (audioContext) {
