@@ -30,29 +30,6 @@ let vibrationInterval;
 /** Set while an MP3 session is active; call to settle the waiting promise (e.g. on Stop). */
 let settlePlayback = null;
 
-const EJECT_BTN_IDLE_HTML = `
-                <span class="eject-circle-btn__icons" aria-hidden="true">
-                    <svg class="eject-circle-btn__wind" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 14a4 4 0 0 1 4-4h1.5M4 10a8 8 0 0 1 8-8h2M4 18h3M8 18h8M12 14h6M16 10h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="eject-circle-btn__drops">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="currentColor" opacity="0.95"/>
-                        </svg>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="currentColor" opacity="0.65"/>
-                        </svg>
-                    </span>
-                </span>`;
-
-const EJECT_BTN_RUNNING_HTML = `
-                <span class="eject-circle-btn__icons eject-circle-btn__icons--running" aria-hidden="true">
-                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" opacity="0.35"/>
-                        <path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </span>`;
-
 document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
   setupMobileMenu();
@@ -219,10 +196,17 @@ function playMp3ThroughGraph(mediaEl, mediaNode, statusWhilePlaying, statusIfCom
   });
 }
 
+function handlePrimaryAction() {
+  if (isPlaying) {
+    stopCleaning();
+  } else {
+    startCleaning();
+  }
+}
+
 function setupEventListeners() {
   const startBtn = document.getElementById("startBtn");
-  const stopBtn = document.getElementById("stopBtn");
-  if (!startBtn || !stopBtn) return;
+  if (!startBtn) return;
 
   const soundTool = document.getElementById("soundTool");
 
@@ -274,8 +258,7 @@ function setupEventListeners() {
     });
   });
 
-  startBtn.addEventListener("click", startCleaning);
-  stopBtn.addEventListener("click", stopCleaning);
+  startBtn.addEventListener("click", handlePrimaryAction);
 
   initProgressGauge();
   updateEjectHint();
@@ -419,23 +402,24 @@ function updateProgress(percent, status) {
 
 function updateUIState(playing) {
   const startBtn = document.getElementById("startBtn");
-  const stopBtn = document.getElementById("stopBtn");
+  const primaryToggleLabel = document.getElementById("primaryToggleLabel");
   const modeBtns = document.querySelectorAll(".sound-submodes .mode-btn");
   const speakerBtns = document.querySelectorAll(".speaker-btn");
   const modeTypeBtns = document.querySelectorAll(".mode-type-btn");
 
-  startBtn.disabled = playing;
-  stopBtn.disabled = !playing;
+  if (startBtn) {
+    startBtn.disabled = false;
+    startBtn.setAttribute("aria-label", playing ? "Stop cleaning" : "Start cleaning");
+    startBtn.classList.toggle("eject-circle-btn--running", playing);
+  }
+
+  if (primaryToggleLabel) {
+    primaryToggleLabel.textContent = playing ? "Stop" : "Start";
+  }
 
   modeBtns.forEach((btn) => (btn.disabled = playing));
   speakerBtns.forEach((btn) => (btn.disabled = playing));
   modeTypeBtns.forEach((btn) => (btn.disabled = playing));
-
-  if (!playing) {
-    startBtn.innerHTML = EJECT_BTN_IDLE_HTML;
-  } else {
-    startBtn.innerHTML = EJECT_BTN_RUNNING_HTML;
-  }
 }
 
 function setupMobileMenu() {

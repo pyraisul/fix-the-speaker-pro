@@ -66,17 +66,12 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">Fix My Speaker — Eject Water & Dust in Seconds</h1>
-                <p class="hero-subtitle">Dropped your phone in water? Sound muffled after a shower? Our free speaker cleaner pushes out trapped moisture and dust using targeted sound frequencies — no app download needed.</p>
             </div>
 
             <!-- Speaker Cleaner Tool -->
             <div class="tool-container">
                 <div class="tool-card sound-tool-card">
                     <div class="sound-tool" id="soundTool">
-                        <header class="sound-tool__header">
-                            <h2 class="sound-tool__title">Fix My Speaker</h2>
-                            <p class="sound-tool__subtitle">Eject water and dust from your phone’s speaker.</p>
-                        </header>
 
                         <div class="progress-gauge" aria-live="polite">
                             <svg class="progress-gauge__svg" viewBox="0 0 200 108" xmlns="http://www.w3.org/2000/svg"
@@ -122,39 +117,48 @@
                                 <button type="button" class="speaker-btn" data-speaker="left">Left</button>
                                 <button type="button" class="speaker-btn" data-speaker="right">Right</button>
                             </div>
-                            <p class="speaker-routing-hint">Left/right mutes the opposite stereo channel (clearest on
-                                headphones). Mono MP3s or a single PC speaker can sound the same on every setting.</p>
+            
                         </div>
 
                         <div class="eject-control">
                             <button type="button" class="eject-circle-btn" id="startBtn"
                                 aria-label="Start cleaning">
-                                <span class="eject-circle-btn__icons" aria-hidden="true">
-                                    <svg class="eject-circle-btn__wind" width="36" height="36" viewBox="0 0 24 24"
-                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M4 14a4 4 0 0 1 4-4h1.5M4 10a8 8 0 0 1 8-8h2M4 18h3M8 18h8M12 14h6M16 10h4"
-                                            stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                    <span class="eject-circle-btn__drops">
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
-                                                fill="currentColor" opacity="0.95" />
-                                        </svg>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
-                                                fill="currentColor" opacity="0.65" />
-                                        </svg>
+                                <span class="eject-circle-btn__inner">
+                                    <span class="eject-circle-btn__top-slot" aria-hidden="true">
+                                        <span class="eject-circle-btn__idle-icons">
+                                            <svg class="eject-circle-btn__wind" width="28" height="28"
+                                                viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M4 14a4 4 0 0 1 4-4h1.5M4 10a8 8 0 0 1 8-8h2M4 18h3M8 18h8M12 14h6M16 10h4"
+                                                    stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                            <span class="eject-circle-btn__drops">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                                    <path
+                                                        d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
+                                                        fill="currentColor" opacity="0.95" />
+                                                </svg>
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                                    <path
+                                                        d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
+                                                        fill="currentColor" opacity="0.65" />
+                                                </svg>
+                                            </span>
+                                        </span>
+                                        <span class="eject-circle-btn__running-spinner">
+                                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"
+                                                    opacity="0.35" />
+                                                <path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" />
+                                            </svg>
+                                        </span>
                                     </span>
+                                    <span class="eject-circle-btn__label" id="primaryToggleLabel">Start</span>
                                 </span>
                             </button>
-                            <button type="button" class="eject-stop-btn" id="stopBtn" disabled>Stop</button>
-                            <p class="eject-hint" id="ejectHint">Press to eject water</p>
                         </div>
 
                         <!-- Volume Warning -->
